@@ -237,10 +237,24 @@
 如果您需要更详细的财务数据或技术分析指标，可以进一步调用“medium”或“full”工具进行深入分析。
 ```
 
-# QA 常见问题解答
+# QA 常见问题
 
-Q：使用股票 MCP 服务是否需要付费
-A：该服务目前限时免费体验，未来请关注项目主页 https://github.com/elsejj/mcp-cn-a-stock 的更新。
+## 使用股票 MCP 服务是否需要付费
 
-Q：联系方式
+该服务目前限时免费体验，未来请关注项目主页 https://github.com/elsejj/mcp-cn-a-stock 的更新。
+
+## 如何私有部署
+
+私有部署需替换本项目使用的数据源为你自有的数据, 参见[相关的讨论](https://github.com/elsejj/mcp-cn-a-stock/issues/1)
+
+## 缺少某些标的数据
+
+目前主要覆盖沪深主板 A 股, 其他的暂无计划.
+
+## 调用频率, 限流等
+
+正常使用不会有限制, 因为模型调取工具分析需要的时间远大于 MCP 返回时间, 批量轮询数据则可能会被限流.
+
+## 联系方式
+
 A：请在 https://github.com/elsejj/mcp-cn-a-stock/issues 发起问题或向 cs@kanhq.com 发送邮件，谢谢。
