@@ -26,6 +26,12 @@
 
 然后需要一个 MCP 客户端来连接这个服务，下面是一些常用的 MCP 客户端的配置方法。
 
+## 重要更新 2025-11-22
+
+更新 MCP 协议为 `streamable-http`, 测试服务地址变更为
+
+`http://82.156.17.205/cnstock/mcp`
+
 ## CherryStudio
 
 [CherryStudio](https://github.com/CherryHQ/cherry-studio) 是一个支持 MCP 的客户端，提供了用户友好的界面和丰富的功能。
