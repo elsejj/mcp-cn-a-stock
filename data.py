@@ -1,10 +1,11 @@
+from dotenv import load_dotenv
+load_dotenv(override=True)
+
 from io import StringIO
 
-from dotenv import load_dotenv
 
 from qtf_mcp import research
 
-load_dotenv(override=True)
 import logging
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
@@ -25,8 +26,8 @@ async def load_data(symbol: str, start_date: str, end_date: str) -> str:
 if __name__ == "__main__":
   import asyncio
 
-  symbol = "SH600519"
-  start_date = "2023-01-01"
+  symbol = "SH600537"
+  start_date = "2025-01-01"
   end_date = "2026-01-01"
   result = asyncio.run(load_data(symbol, start_date, end_date))
   print(result)
