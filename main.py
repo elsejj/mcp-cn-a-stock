@@ -19,7 +19,7 @@ from qtf_mcp.symbols import load_symbols
 @click.option(
   "--transport",
   type=click.Choice(["stdio", "sse", "http"], case_sensitive=False),
-  default="sse",
+  default="http",
   help="Transport type",
 )
 def main(port: int, transport: str) -> int:

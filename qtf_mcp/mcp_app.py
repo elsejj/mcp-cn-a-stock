@@ -1,15 +1,25 @@
 from io import StringIO
 
 from mcp.server.fastmcp import Context, FastMCP
-
+from starlette.applications import Starlette
+from starlette.middleware.cors import CORSMiddleware
 from . import research
 
+
+class QtfMCP(FastMCP):
+
+  def streamable_http_app(self) -> Starlette:
+    super_app = super().streamable_http_app()
+    super_app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+    return super_app
+
 # Create an MCP server
-mcp_app = FastMCP(
+mcp_app = QtfMCP(
   "CnStock",
   sse_path="/cnstock/sse",
   message_path="/cnstock/messages/",
   streamable_http_path="/cnstock/mcp",
+  stateless_http=True,
 )
 
 

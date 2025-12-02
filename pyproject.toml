@@ -7,5 +7,4 @@ requires-python = ">=3.12"
 dependencies = ["mcp[cli]>=1.22", "qtf", "ta-lib>=0.6.8"]
 
 [tool.uv.sources]
-qtf = { path = "./libs/qtf-0.1.0-cp310-abi3-manylinux_2_39_x86_64.whl" }
-#ta-lib = { path = "./libs/ta_lib-0.6.3-cp312-cp312-linux_x86_64.whl" }
+qtf = { path = "libs/qtf-0.2.0-cp310-abi3-manylinux_2_28_x86_64.whl" }
