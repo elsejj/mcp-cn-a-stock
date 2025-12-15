@@ -224,6 +224,7 @@ def build_technical_data(fp: TextIO, symbol: str, data: Dict[str, ndarray]) -> N
   close = data["CLOSE"]
   high = data["HIGH"]
   low = data["LOW"]
+  volume = data["VOLUME"]
 
   if len(close) < 30:
     return
@@ -241,11 +242,20 @@ def build_technical_data(fp: TextIO, symbol: str, data: Dict[str, ndarray]) -> N
 
   bb_upper, bb_middle, bb_lower = talib.BBANDS(close, matype=talib.MA_Type.T3)  # type: ignore
 
+  obv = talib.OBV(close, volume)
+
+  atr = talib.ATR(high, low, close, timeperiod=14)
+
   date = [
     datetime.datetime.fromtimestamp(d / 1e9).strftime("%Y-%m-%d") for d in data["DATE"]
   ]
   columns = [
     ("日期", date),
+    ("MA(5)", talib.MA(close, timeperiod=5)),
+    ("MA(10)", talib.MA(close, timeperiod=10)),
+    ("MA(30)", talib.MA(close, timeperiod=30)),
+    ("MA(60)", talib.MA(close, timeperiod=60)),
+    ("MA(120)", talib.MA(close, timeperiod=120)),
     ("KDJ.K", kdj_k),
     ("KDJ.D", kdj_d),
     ("KDJ.J", kdj_j),
@@ -257,6 +267,8 @@ def build_technical_data(fp: TextIO, symbol: str, data: Dict[str, ndarray]) -> N
     ("BBands Upper", bb_upper),
     ("BBands Middle", bb_middle),
     ("BBands Lower", bb_lower),
+    ("OBV", obv),
+    ("ATR", atr),
   ]
   print("| " + " | ".join([c[0] for c in columns]) + " |", file=fp)
   print("| --- " * len(columns) + "|", file=fp)

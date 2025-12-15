@@ -26,7 +26,7 @@ async def load_data(symbol: str, start_date: str, end_date: str) -> str:
 if __name__ == "__main__":
   import asyncio
 
-  symbol = "SH600537"
+  symbol = "SZ001335"
   start_date = "2025-01-01"
   end_date = "2026-01-01"
   result = asyncio.run(load_data(symbol, start_date, end_date))
