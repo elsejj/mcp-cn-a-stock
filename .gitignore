@@ -16,3 +16,10 @@ uv.lock
 log.txt
 
 libs
+db/msd_db
+db/logs
+db/msd.pid
+
+nohup.out
+
+.vscode

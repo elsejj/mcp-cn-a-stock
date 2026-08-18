@@ -1,26 +1,19 @@
 from io import StringIO
 
-from mcp.server.fastmcp import Context, FastMCP
-from starlette.applications import Starlette
-from starlette.middleware.cors import CORSMiddleware
+from mcp.server.mcpserver import Context, MCPServer
 from . import research
 
 
-class QtfMCP(FastMCP):
+# class QtfMCP(MCPServer):
 
-  def streamable_http_app(self) -> Starlette:
-    super_app = super().streamable_http_app()
-    super_app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
-    return super_app
+#   def streamable_http_app(self) -> Starlette:
+#     super_app = super().streamable_http_app()
+#     super_app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+#     return super_app
 
 # Create an MCP server
-mcp_app = QtfMCP(
-  "CnStock",
-  sse_path="/cnstock/sse",
-  message_path="/cnstock/messages/",
-  streamable_http_path="/cnstock/mcp",
-  stateless_http=True,
-)
+mcp_app = MCPServer("CnStock")
+
 
 
 @mcp_app.tool()
@@ -32,7 +25,7 @@ async def brief(symbol: str, ctx: Context) -> str:
     symbol (str): Stock symbol, must be in the format of "SH000001" or "SZ000001", you should infer user inputs like stock name to stock symbol
   """
   who = ctx.request_context.request.client.host  # type: ignore
-  raw_data = await research.load_raw_data(symbol, None, who)
+  raw_data = await research.load_raw_data(symbol, who)
   buf = StringIO()
   if len(raw_data) == 0:
     return "No data found for symbol: " + symbol
@@ -52,7 +45,7 @@ async def medium(symbol: str, ctx: Context) -> str:
     symbol (str): Stock symbol, must be in the format of "SH000001" or "SZ000001", you infer convert user inputs like stock name to stock symbol
   """
   who = ctx.request_context.request.client.host  # type: ignore
-  raw_data = await research.load_raw_data(symbol, None, who)
+  raw_data = await research.load_raw_data(symbol, who)
   buf = StringIO()
   if len(raw_data) == 0:
     return "No data found for symbol: " + symbol
@@ -73,7 +66,7 @@ async def full(symbol: str, ctx: Context) -> str:
     symbol (str): Stock symbol, must be in the format of "SH000001" or "SZ000001", you should infer user inputs like stock name to stock symbol
   """
   who = ctx.request_context.request.client.host  # type: ignore
-  raw_data = await research.load_raw_data(symbol, None, who)
+  raw_data = await research.load_raw_data(symbol, who)
   buf = StringIO()
   if len(raw_data) == 0:
     return "No data found for symbol: " + symbol
