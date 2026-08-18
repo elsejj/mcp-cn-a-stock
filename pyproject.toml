@@ -1,7 +1,7 @@
 [project]
 name = "qtf-mcp"
 version = "0.1.3"
-description = "Add your description here"
+description = "A MCP service provide CN market data and research tools"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -13,6 +13,3 @@ dependencies = [
 ]
 
 [tool.uv.sources]
-
-[dependency-groups]
-dev = ["pymsd>=0.1.16"]
