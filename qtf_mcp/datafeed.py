@@ -1,3 +1,4 @@
+from time import time
 import json
 import logging
 import os
@@ -36,6 +37,7 @@ def load_data_msd(
   msd_client: MsdClient[pl.DataFrame] = create_msd_polars(msd_host)
 
 
+  t1 = time()
   day = msd_client.load(
     objs=symbol,
     tables=["stock_kline_1d", "stock_dividend", "stock_shares"],
@@ -43,6 +45,9 @@ def load_data_msd(
     start=[n, (n//20)+1, (n//20)+1],
     end=None,
   )
+  t2 = time()
+  logger.info(f"{who} fetch data cost {t2 - t1:.4f} seconds, symbols: {symbol}")
+
   day_np = msd_client.adaptor.to_numpy(day[symbol])
 
   fin = msd_client.load(

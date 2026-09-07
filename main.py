@@ -32,7 +32,7 @@ def main(port: int, transport: str) -> int:
   mcp_app.settings.log_level = "WARNING"
   logger.info(f"Starting MCP app on port {port} with transport {transport}")
   if transport == "streamable-http":
-    app = mcp_app.streamable_http_app(streamable_http_path="/cnstock/mcp")
+    app = mcp_app.streamable_http_app(streamable_http_path="/cnstock/mcp", stateless_http=True)
     app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
     uvicorn.run(app, host="0.0.0.0", port=port)  # type: ignore
   else:

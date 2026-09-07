@@ -2,12 +2,12 @@ import datetime
 from io import StringIO
 from typing import Dict, TextIO
 
-import talib
 from numpy import ndarray
 from .indicators import KDJ, MACD, RSI,BBANDS, OBV, ATR
 
 from .datafeed import load_data_msd
 from .symbols import symbol_with_name
+import alpha as al
 
 
 async def load_raw_data(
@@ -270,11 +270,11 @@ def build_technical_data(fp: TextIO, symbol: str, data: Dict[str, ndarray]) -> N
   ]
   columns = [
     ("日期", date),
-    ("MA(5)", talib.MA(close, timeperiod=5)),
-    ("MA(10)", talib.MA(close, timeperiod=10)),
-    ("MA(30)", talib.MA(close, timeperiod=30)),
-    ("MA(60)", talib.MA(close, timeperiod=60)),
-    ("MA(120)", talib.MA(close, timeperiod=120)),
+    ("MA(5)", al.MA(close, 5)),
+    ("MA(10)", al.MA(close, 10)),
+    ("MA(30)", al.MA(close, 30)),
+    ("MA(60)", al.MA(close, 60)),
+    ("MA(120)", al.MA(close, 120)),
     ("KDJ.K", kdj_k),
     ("KDJ.D", kdj_d),
     ("KDJ.J", kdj_j),
