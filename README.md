@@ -32,6 +32,40 @@
 
 `http://82.156.17.205/cnstock/mcp`
 
+## 部署自己的实例
+
+
+### 数据库
+
+- 目前使用 [msd](https://github.com/msd-rs/msd) 作为数据库, 这是一个专为金融时序数据设计的数据库, 高效且易用 
+- 下载 msd 后, 将其加入 $PATH
+- 在 `db` 目录中, 运行 `start.sh` 来启动数据库
+- 如果使用其它数据库, 请自行调整 [datafeed.py](qtf_mcp/datafeed.py) 来获取原始数据
+
+### 数据准备
+
+参考 [create.sql](db/sql/create.sql), 准备以下的数据
+
+- 日线: 参考 [stock_kline_1d.csv](db/sample/stock_kline_1d.csv)
+- 分红送配: 计算分红送配 [stock_dividend.csv](db/sample/stock_dividend.csv)
+- 股本: 参考 [stock_shares.csv](db/sample/stock_shares.csv)
+- 财务指标: 参考 [stock_financial.csv](db/sample/stock_financial.csv)
+- 资金流向: 参考 [stock_capital_flow.csv](db/sample/stock_capital_flow.csv)
+
+示例数据可以在 `db` 目录中, 通过 `msd shell sql/import_sample.sql` 来导入
+
+### 因子计算
+
+- 目前使用 [py-alpha-lib](https://github.com/msd-rs/py-alpha-lib) 作为因子计算库
+- 如果使用其它因子库, 请自行调整 [indicators.py](qtf_mcp/indicators.py) 来实现因子计算
+
+### 启动服务
+
+- 准备好数据库后, 创建 .env 文件, 设置 `MSD_HOST=http://localhost:50510`, 让 `qtf-mcp` 知道数据库的位置
+- 运行 `uv run main.py --transport=http` 来启动服务
+- 默认的服务地址是 `http://localhost:8000/mcp`, 端口可以通过  `--port ` 来指定
+
+
 ## CherryStudio
 
 [CherryStudio](https://github.com/CherryHQ/cherry-studio) 是一个支持 MCP 的客户端，提供了用户友好的界面和丰富的功能。
